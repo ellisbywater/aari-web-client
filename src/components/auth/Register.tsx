@@ -1,8 +1,10 @@
+import { NavLink } from "react-router";
+
 export default function Register() {
     return (
-        <section className="bg-white dark:bg-gray-900">
+        <section className="bg-white dark:bg-slate-900">
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-                <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+                <section className="relative flex h-32 items-start bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
                     <img
                         alt=""
                         src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
@@ -26,7 +28,7 @@ export default function Register() {
                         </a>
 
                         <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                            Welcome to Squid 🦑
+                            Welcome to AARI
                         </h2>
 
                         <p className="mt-4 leading-relaxed text-white/90">
@@ -60,7 +62,7 @@ export default function Register() {
                         </a>
 
                         <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl dark:text-white">
-                            Welcome to Squid 🦑
+                            Welcome to AARI
                         </h1>
 
                         <p className="mt-4 leading-relaxed text-gray-500 dark:text-gray-400">
@@ -70,40 +72,26 @@ export default function Register() {
                     </div>
 
                     <form action="#" className="mt-8 grid grid-cols-6 gap-6">
-                        <div className="col-span-6 sm:col-span-3">
+                        <div className="col-span-6 sm:col-span-4">
                             <label
-                            htmlFor="FirstName"
-                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            htmlFor="username"
+                            className="block text-md font-medium text-gray-700 dark:text-gray-200"
                             >
-                            First Name
+                            Username
                             </label>
 
                             <input
                             type="text"
-                            id="FirstName"
-                            name="first_name"
-                            className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            id="Username"
+                            name="username"
+                            className="mt-1 py-2 w-full rounded-md border-gray-200 bg-white text-md text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                             />
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3">
-                            <label
-                            htmlFor="LastName"
-                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-                            >
-                            Last Name
-                            </label>
+                        
 
-                            <input
-                            type="text"
-                            id="LastName"
-                            name="last_name"
-                            className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                            />
-                        </div>
-
-                        <div className="col-span-6">
-                            <label htmlFor="Email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                        <div className="col-span-6 sm:col-span-4">
+                            <label htmlFor="Email" className="block font-medium text-gray-700 dark:text-gray-200">
                             Email
                             </label>
 
@@ -111,14 +99,14 @@ export default function Register() {
                             type="email"
                             id="Email"
                             name="email"
-                            className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            className="mt-1 py-2 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                             />
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3">
+                        <div className="col-span-6 sm:col-span-4">
                             <label
                             htmlFor="Password"
-                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            className="block font-medium text-gray-700 dark:text-gray-200"
                             >
                             Password
                             </label>
@@ -127,14 +115,14 @@ export default function Register() {
                             type="password"
                             id="Password"
                             name="password"
-                            className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            className="mt-1 py-2 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                             />
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3">
+                        <div className="col-span-6 sm:col-span-4">
                             <label
                             htmlFor="PasswordConfirmation"
-                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            className="block font-medium text-gray-700 dark:text-gray-200"
                             >
                             Password Confirmation
                             </label>
@@ -143,7 +131,7 @@ export default function Register() {
                             type="password"
                             id="PasswordConfirmation"
                             name="password_confirmation"
-                            className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            className="mt-1 py-2 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                             />
                         </div>
 
@@ -175,14 +163,14 @@ export default function Register() {
 
                         <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                             <button
-                            className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+                            className="inline-block shrink-0 rounded-md border border-emerald-600 bg-emerald-400 px-12 py-3  font-medium text-white transition hover:bg-transparent hover:text-emerald-500 focus:outline-none focus:ring active:text-emerald-500 dark:hover:bg-emerald-600 dark:hover:text-white"
                             >
-                            Create an account
+                            Create account
                             </button>
 
                             <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-400">
                             Already have an account?
-                            <a href="#" className="text-gray-700 underline dark:text-gray-200">Log in</a>.
+                            <NavLink to="/login" className="text-gray-700 text-lg px-2 underline dark:text-green-300">Log in</NavLink>.
                             </p>
                         </div>
                     </form>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { NavLink } from "react-router";
 
 export default function Navbar() {
     const [nav, setNav] = useState(false)
@@ -22,12 +23,13 @@ export default function Navbar() {
       {/* Desktop Navigation */}
       <ul className='hidden md:flex items-center'>
         {navItems.map(item => (
-          <li
+          <NavLink
+            to={item.to}
             key={item.id}
             className='px-2 py-4 w-[150px] hover:bg-[#00df9a] text-center rounded-xl m-2 cursor-pointer duration-300 hover:text-slate-900'
           >
             {item.text}
-          </li>
+          </NavLink>
         ))}
       </ul>
 
@@ -49,12 +51,13 @@ export default function Navbar() {
 
         {/* Mobile Navigation Items */}
         {navItems.map(item => (
-          <li
+          <NavLink
+            to={item.to}
             key={item.id}
             className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600'
           >
             {item.text}
-          </li>
+          </NavLink>
         ))}
       </ul>
     </div>
