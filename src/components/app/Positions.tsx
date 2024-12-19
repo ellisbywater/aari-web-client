@@ -1,4 +1,6 @@
+import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink } from "react-router";
+import { AssetType, Bias } from "../../types/positions";
 
 
 
@@ -41,7 +43,7 @@ export default function Positions() {
                 </NavLink>
             </div>
             <div className="w-full p-6">
-                <h3 className="text-2xl p-4">Positions</h3>
+                <h3 className="text-2xl p-4 font-bold">Positions</h3>
             </div>
             <div className="w-full p-8">
                 <table className="table-auto w-full">
@@ -71,6 +73,56 @@ export default function Positions() {
                     </tbody>
                 </table>
             </div>
+        </div>
+    )
+}
+
+interface IPositionFormInput {
+    ticker: string,
+    asset_type: AssetType,
+    bias: Bias,
+    justification: string,
+    initial_investment: number
+}
+
+export function NewPosition() {
+    const { register, handleSubmit } = useForm<IPositionFormInput>()
+    const onSubmit: SubmitHandler<IPositionFormInput> = (data) => console.log(data)
+
+    return (
+        <div className="col-span-6 ">
+            <div className="w-full h-[150px] bg-gray-900 flex items-center">
+                <h3 className="text-2xl p-4 w-full text-center "> New Position</h3>
+            </div>
+            
+            <form className="w-3/4 p-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
+                <div className="w-full py-2">
+                    <label htmlFor="ticker" className="block font-medium text-gray-700 dark:text-gray-200">Ticker</label>
+                    <input type="text" id="ticker" className="mt-1 p-2 w-1/3 rounded-md border-gray-200 bg-white text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200" 
+                    {...register("ticker", {required: true, maxLength: 20})}
+                    />
+                </div>
+                <div className="w-full py-2">
+                    <label htmlFor="bias" className="block font-medium text-gray-700 dark:text-gray-200">Bias</label>
+                    <select {...register("bias")} className="font-medium bg-white text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 p-2 rounded">
+                        <option value={"long"}>Long</option>
+                        <option value={"short"}>Short</option>
+                    </select>
+                </div>
+                <div className="w-full py-2">
+                    <label htmlFor="justification" className="block font-medium text-gray-700 dark:text-gray-200">Justification</label>
+                    <textarea className="w-full p-2 rounded-md border-gray-200 bg-white text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200" {...register("justification", {required: true})} />
+                </div>
+                <div className="w-full py-2">
+                    <label htmlFor="initial_investment" className="block font-medium text-gray-700 dark:text-gray-200">Initial Investment</label>
+                    <input type="number" id="initial_investment" className="mt-1 p-2 w-1/3 rounded-md border-gray-200 bg-white text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                    {...register("initial_investment", {required: true})}
+                    /> 
+                </div>
+                <button className="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 text-lg rounded mt-4" type="submit">
+                    Create
+                </button>
+            </form>
         </div>
     )
 }

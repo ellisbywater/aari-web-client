@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { FaChartPie, FaPuzzlePiece, FaChartLine, FaUser, FaChevronRight, FaChevronLeft, FaUserCircle } from "react-icons/fa";
+import { FaChartPie, FaChartLine, FaChevronRight, FaChevronLeft, FaUserCircle } from "react-icons/fa";
 import { MdCandlestickChart } from "react-icons/md";
 import { HiDotsVertical } from "react-icons/hi";
 import { useState } from "react";
