@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate, useParams } from "react-router";
 import { AssetType, Bias } from "../../types/positions";
 import { useEffect, useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { RingLoader } from "react-spinners";
 
 
 
@@ -42,7 +44,7 @@ interface PositionRowItemData {
 
 function PositionRowItem({id, ticker, bias, price, change}: {id: string,ticker: string, bias: Bias, price: number, change: number}) {
     return (
-        <NavLink to={`/app/positions/${id}`} className="w-full p-4 bg-gray-900 flex flex-wrap">
+        <NavLink to={`/app/positions/${id}`} className=" col-start-2 col-span-4 p-4 bg-black flex flex-wrap hover:bg-black/50">
             <div className="h-full w-1/4">
                 <p>{ticker}</p>
             </div>
@@ -61,6 +63,7 @@ function PositionRowItem({id, ticker, bias, price, change}: {id: string,ticker: 
 
 
 export default function Positions() {
+    const navigate = useNavigate()
     const [positions, setPositions] = useState<PositionRowItemData[] | null>(null)
     const [error, setError] = useState<string |null>(null)
 
@@ -74,8 +77,25 @@ export default function Positions() {
             }
         }
     }, [])
+
+    const onPositionTableRowClick = (id: string) => {   
+        navigate(`/app/positions/${id}`)
+
+    }
+
     return (
         <div className="w-full h-full col-span-6">
+            <ToastContainer position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce} />
             <div className="w-full h-[150px] bg-gray-900 flex content-center  ">
                 <NavLink to={'/app/positions/new'} className={'max-h-10 my-auto mx-auto rounded-xl px-5 py-2 bg-emerald-500 hover:bg-emerald-600'}>
                     New Position
@@ -85,11 +105,7 @@ export default function Positions() {
                 <h3 className="text-2xl p-4 font-bold">Positions</h3>
             </div>
             <div className="w-full p-8">
-                <div className="w-full grid grid-cols-6 gap-4">
-                    {
-                        
-                    }
-                </div>
+                {error && <p className="p-4 bg-red-500 text-gray-200">{error}</p>}
                 <table className="table-auto w-full">
                     <thead>
                         <tr className="text-lg border-b border-slate-500">
@@ -97,23 +113,17 @@ export default function Positions() {
                             <th className="py-2 ">Bias</th>
                             <th className="py-2">Price</th>
                             <th className="py-2">24hr Change</th>
-                            <th className="py-2">Action</th>
                         </tr>
                     </thead>
                     <tbody className="p-2">
                         {
-                            mockPositionData && mockPositionData.map(pos => {
+                            positions && positions.map(pos => {
                                 return  (
-                                    <tr className="h-[50px] py-4 mt-4 text-center text-lg">
+                                    <tr className="h-[50px] py-4 mt-4 text-center text-lg hover:bg-black/50 cursor-pointer" onClick={()=>onPositionTableRowClick(pos.id)}>
                                         <td>{pos.ticker}</td>
                                         <td>{pos.bias}</td>
                                         <td>{pos.price}</td>
                                         <td>{pos.change}</td>
-                                        <td>
-                                            <NavLink to={`/app/positions/${pos.id}`} className={'text-emerald-600 hover:text-emerald-500'}>
-                                                View/Edit
-                                            </NavLink>
-                                        </td>
                                     </tr>
                                 )
                             })
@@ -140,7 +150,7 @@ export function NewPosition() {
     return (
         <div className="col-span-6 ">
             <div className="w-full h-[150px] bg-gray-900 flex items-center">
-                <h3 className="text-2xl p-4 w-full text-center "> New Position</h3>
+                <h3 className="text-2xl p-4 w-full text-center">New Position</h3>
             </div>
             
             <form className="w-3/4 p-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
@@ -171,6 +181,52 @@ export function NewPosition() {
                     Create
                 </button>
             </form>
+        </div>
+    )
+}
+
+const mockPos = {
+    id: 'xyz',
+    ticker: 'ABC',
+    bias: 'long',
+    justification: 'because its pretty',
+    expiration:'',
+    initial_investment: 2.00,
+    return: 3.75,
+    public: false,
+    current_price: 75.98,
+    balance: 80.22
+}
+
+export function Position() {
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string | null>(null)
+    // const {id} = useParams()
+    const [position, setPosition] = useState(mockPos)
+
+    useEffect(()=> {
+        try {
+            setLoading(true)
+            setPosition(mockPos)
+            setLoading(false)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+                toast.error(err.message)
+            }
+            setLoading(false)
+        }
+    })
+    return (
+        <div className="w-full">
+            {error && <p className="bg-red-400 p-4 text-gray-200">{error}</p>}
+            <div className="w-full p-6">
+
+            </div>
+            <div>
+
+            </div>
+            <RingLoader color="#fff" loading={loading} aria-label="Loading Spinner" />
         </div>
     )
 }
