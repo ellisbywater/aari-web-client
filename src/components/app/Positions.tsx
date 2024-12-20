@@ -1,40 +1,79 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink } from "react-router";
 import { AssetType, Bias } from "../../types/positions";
+import { useEffect, useState } from "react";
 
 
 
-const mockPositionData = [
+const mockPositionData: PositionRowItemData[] = [
     {
-        name: 'Bitcoin',
+        id: '',
         ticker: 'BTC',
-        asset_type: 'crypto',
         bias: 'long',
-        price: '106,252.09',
-        change: '6.37'
+        price: 106_252.09,
+        change: 6.37
     },
     {
-        name: 'Tesla',  
+        id: '',  
         ticker: 'TSLA',
-        asset_type: 'fund',
         bias: 'long',
-        price: '106,252.09',
-        change: '6.37'
+        price: 106_252.09,
+        change: 6.37
     },
     {
-        name: 'NIFTY 50 Index',
+        id: '',
         ticker: 'NIFTY',
-        asset_type: 'index',
         bias: 'long',
-        price: '106,252.09',
-        change: '6.37'
+        price: 106_252.09,
+        change: 6.37
     }
 
 ]
 
+interface PositionRowItemData {
+    id: string,
+    ticker: string,
+    bias: Bias,
+    price: number,
+    change: number
+}
+
+
+
+function PositionRowItem({id, ticker, bias, price, change}: {id: string,ticker: string, bias: Bias, price: number, change: number}) {
+    return (
+        <NavLink to={`/app/positions/${id}`} className="w-full p-4 bg-gray-900 flex flex-wrap">
+            <div className="h-full w-1/4">
+                <p>{ticker}</p>
+            </div>
+            <div className="h-full w-1/4">
+                <p>{bias}</p>
+            </div>
+            <div className="h-full w-1/4">
+                <p>{price}</p>
+            </div>
+            <div className="h-full w-1/4">
+                <p>{change}</p>
+            </div>
+        </NavLink>
+    )
+}
 
 
 export default function Positions() {
+    const [positions, setPositions] = useState<PositionRowItemData[] | null>(null)
+    const [error, setError] = useState<string |null>(null)
+
+    useEffect(() => {
+        try {
+            setPositions(mockPositionData)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+                toast.error(err.message)
+            }
+        }
+    }, [])
     return (
         <div className="w-full h-full col-span-6">
             <div className="w-full h-[150px] bg-gray-900 flex content-center  ">
@@ -46,14 +85,19 @@ export default function Positions() {
                 <h3 className="text-2xl p-4 font-bold">Positions</h3>
             </div>
             <div className="w-full p-8">
+                <div className="w-full grid grid-cols-6 gap-4">
+                    {
+                        
+                    }
+                </div>
                 <table className="table-auto w-full">
                     <thead>
                         <tr className="text-lg border-b border-slate-500">
                             <th className="py-2">Ticker</th>
-                            <th className="py-2">Asset Type</th>
-                            <th className="py-2">Bias</th>
+                            <th className="py-2 ">Bias</th>
                             <th className="py-2">Price</th>
                             <th className="py-2">24hr Change</th>
+                            <th className="py-2">Action</th>
                         </tr>
                     </thead>
                     <tbody className="p-2">
@@ -62,10 +106,14 @@ export default function Positions() {
                                 return  (
                                     <tr className="h-[50px] py-4 mt-4 text-center text-lg">
                                         <td>{pos.ticker}</td>
-                                        <td>{pos.asset_type}</td>
                                         <td>{pos.bias}</td>
                                         <td>{pos.price}</td>
                                         <td>{pos.change}</td>
+                                        <td>
+                                            <NavLink to={`/app/positions/${pos.id}`} className={'text-emerald-600 hover:text-emerald-500'}>
+                                                View/Edit
+                                            </NavLink>
+                                        </td>
                                     </tr>
                                 )
                             })
