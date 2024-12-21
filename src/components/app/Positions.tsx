@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NavLink, useNavigate, useParams } from "react-router";
+import { NavLink, useNavigate} from "react-router";
 import { AssetType, Bias } from "../../types/positions";
 import { useEffect, useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
@@ -40,26 +40,6 @@ interface PositionRowItemData {
     change: number
 }
 
-
-
-function PositionRowItem({id, ticker, bias, price, change}: {id: string,ticker: string, bias: Bias, price: number, change: number}) {
-    return (
-        <NavLink to={`/app/positions/${id}`} className=" col-start-2 col-span-4 p-4 bg-black flex flex-wrap hover:bg-black/50">
-            <div className="h-full w-1/4">
-                <p>{ticker}</p>
-            </div>
-            <div className="h-full w-1/4">
-                <p>{bias}</p>
-            </div>
-            <div className="h-full w-1/4">
-                <p>{price}</p>
-            </div>
-            <div className="h-full w-1/4">
-                <p>{change}</p>
-            </div>
-        </NavLink>
-    )
-}
 
 
 export default function Positions() {
@@ -195,20 +175,57 @@ const mockPos = {
     return: 3.75,
     public: false,
     current_price: 75.98,
-    balance: 80.22
+    balance: 80.22,
 }
 
+
+// Component Displays Position data as well market data for the respective ticker
 export function Position() {
     const [loading, setLoading] = useState<boolean>(false)
+    const [loadingCandles, setLoadingCandles] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     // const {id} = useParams()
     const [position, setPosition] = useState(mockPos)
+    // const [candles, setCandles] = useState([])
+
+    // Fetch ticker(product) candles from coinbase public api
+    async function fetchCandles(ticker: string) {
+        const url = `https://api.coinbase.com/api/v3/brokerage/market/products/${ticker}}/candles`
+        try  {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    // Fetch ticker(product) information from coinbase public api
+    async function fetchProduct(ticker: string) {
+        const url = `https://api.coinbase.com/api/v3/brokerage/market/products/${ticker}`
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "applicatin/json"
+                }
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(()=> {
         try {
             setLoading(true)
             setPosition(mockPos)
-            setLoading(false)
+            fetchProduct(position.ticker).then(res => console.log(res))
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message)
@@ -216,15 +233,32 @@ export function Position() {
             }
             setLoading(false)
         }
-    })
+        setLoading(false)
+    }, [loading, position])
+
+    useEffect(() => {
+        try {
+            setLoadingCandles(true)
+            fetchCandles(position.ticker).then(res => console.log(res))
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+                toast.error(err.message)
+            }
+        }
+        setLoadingCandles(false)
+    }, [position])
+
+
     return (
         <div className="w-full">
             {error && <p className="bg-red-400 p-4 text-gray-200">{error}</p>}
             <div className="w-full p-6">
-
+                <h3>{position?.ticker}</h3>
+                <h2>{position?.current_price}</h2>
             </div>
-            <div>
-
+            <div className="w-full p-6 grid">
+                <RingLoader color="#fff" loading={loadingCandles} aria-label="Loading Spinner" />
             </div>
             <RingLoader color="#fff" loading={loading} aria-label="Loading Spinner" />
         </div>
