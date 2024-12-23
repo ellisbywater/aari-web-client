@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .hero {
+    @apply bg-[url('/rnr_background.png')] bg-cover bg-center bg-no-repeat;
+  }
+  .nav-link {
+    @apply flex text-white hover:text-gray-100 h-full sm:w-[130px] text-center px-3 py-2 font-extralight items-center;
+  }
+  .nav-link p {
+    @apply w-full text-center;
+  }
+  .nav-link:hover {
+    @apply underline underline-offset-4 transition-all;
+  }
+
+  .portable-text h1 {
+    @apply text-4xl font-bold my-4;
+  }
+  .portable-text h2 {
+    @apply text-3xl font-bold my-4;
+  }
+  .portable-text h3 {
+    @apply text-2xl font-bold my-3;
+  }
+  .portable-text h4 {
+    @apply text-xl font-bold my-2;
+  }
+  .portable-text h5 {
+    @apply text-lg font-bold;
+  }
+  .portable-text h6 {
+    @apply text-base font-bold;
+  }
+  .portable-text p {
+    @apply text-lg leading-relaxed;
+  }
+  .portable-text a {
+    @apply text-blue-500;
+  }
+  .portable-text a:hover {
+    @apply underline underline-offset-4 transition-all;
+  }
+  .portable-text ul {
+    @apply list-disc list-inside;
+  }
+  .portable-text ol {
+    @apply list-decimal list-inside;
+  }
+  .portable-text li {
+    @apply mb-2;
+  }
+  .portable-text li p {
+    @apply inline;
+  }
+  .portable-text li p::after {
+    @apply content-['\\A'];
+    white-space: pre;
+  }
+  .portable-text li p:last-child::after {
+    @apply content-none;
+  }
+
+  .grid-shadow-card {
+    @apply w-[350px] h-[400px] p-4 rounded border border-slate-300 shadow-xl flex flex-col;
+  }
+
+  .grid-shadow-card h3 {
+    @apply w-full  text-2xl font-bold mb-4 py-8 h-1/3;
+  }
+
+  .grid-shadow-card p {
+    @apply text-sm w-full h-2/3 py-2 leading-relaxed;
+  }
+}

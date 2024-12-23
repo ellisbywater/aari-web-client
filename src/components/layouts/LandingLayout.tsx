@@ -4,12 +4,12 @@ import Footer from "../landing/Footer";
 
 export default function LandingLayout() {
     return (
-        <div className="w-full bg-slate-900 text-slate-100 min-h-fit">
+        <main className={'bg-black grid grid-cols-1 min-h-screen'}>
             <Navbar />
-            <div className="w-full min-h-screen">
-                <Outlet/>
+            <div className={'w-full flex flex-col bg-black'}>
+                <Outlet />
             </div>
             <Footer />
-        </div>
+        </main>
     )
 }
